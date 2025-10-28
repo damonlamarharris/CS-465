@@ -1,0 +1,12 @@
+# Git ignore file 
+# Node.js
+node_modules/
+.env
+
+# macOS / Windows system files
+.DS_Store
+Thumbs.db
+
+# IDE folders
+.vscode/
+.idea/
