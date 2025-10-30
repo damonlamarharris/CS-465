@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Travlr Getaways | Travel</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <script defer src="/app.js"></script>
+</head>
+<body>
+  <header class="topnav">
+    <div class="logo">Corp Logo</div>
+    <nav>
+      <a href="/travel" class="active">Travel</a>
+      <a href="#">News</a>
+      <a href="#">Reservations</a>
+      <a href="/admin">Admin</a>
+      <a href="#">Checkout</a>
+      <a href="/login">Login</a>
+    </nav>
+  </header>
+
+  <main class="content">
+    <h1>Travel</h1>
+    <div class="toolbar">
+      <label>Search Travel
+        <input id="searchBox" placeholder=" beaches, cruises, mountains" />
+      </label>
+      <button id="searchBtn">Go</button>
+      <span id="searchResult" class="muted"></span>
+      <button class="primary">Add a Trip</button>
+    </div>
+
+    <!-- Sample list table (Beaches tab) -->
+    <h2>Beaches (5)</h2>
+    <table class="list">
+      <thead>
+        <tr><th>ID</th><th>Name</th><th>Length</th><th>Start</th><th>Resort</th><th>Per Person</th><th></th></tr>
+      </thead>
+      <tbody>
+        <tr><td>B0101</td><td>Cancun</td><td>4 nights / 5 days</td><td>Feb 14, 2021</td><td>Emerald Bay, 3-stars</td><td>$799.00</td><td><a href="#">Edit</a></td></tr>
+        <tr><td>B0103</td><td>Barbados</td><td>5 nights / 6 days</td><td>Feb 28, 2021</td><td>Castaway Cove, 4-stars</td><td>$1299.00</td><td><a href="#">Edit</a></td></tr>
+      </tbody>
+    </table>
+  </main>
+</body>
+</html>
