@@ -1,0 +1,38 @@
+<h1>Travel</h1>
+
+<div class="chips">
+  <span>Cruises ({{counts.Cruises}})</span>
+  <span>Mountains ({{counts.Mountains}})</span>
+  <span>Beaches ({{counts.Beaches}})</span>
+</div>
+
+<div class="toolbar">
+  <input type="search" placeholder="search travel">
+  <button>Add a Trip</button>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th><th>Name</th><th>Length</th><th>Start</th><th>Resort</th><th>Per Person</th><th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each trips}}
+      <tr>
+        <td>{{id}}</td>
+        <td>{{name}}</td>
+        <td>{{length}}</td>
+        <td>{{start}}</td>
+        <td>{{resort}}</td>
+        <td>${{price}}</td>
+        <td><a href="#">Edit</a></td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+<div class="pager">
+  <a href="#" aria-label="previous">previous &larr;</a>
+  <a href="#" aria-label="next">&rarr; next</a>
+</div>
