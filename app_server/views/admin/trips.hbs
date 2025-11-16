@@ -1,0 +1,39 @@
+<section class="container">
+  <h2>{{title}}</h2>
+  <p>Manage all Travlr trips from this admin screen.</p>
+
+  <p>
+    <!-- Add Trip button goes to /admin/trips/add -->
+    <a href="/admin/trips/add" class="btn btn-primary">Add a Trip</a>
+  </p>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Destination</th>
+        <th>Length</th>
+        <th>Start Date</th>
+        <th>Resort</th>
+        <th>Price (Per Person)</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each trips}}
+      <tr>
+        <td>{{id}}</td>
+        <td>{{name}}</td>
+        <td>{{length}} days</td>
+        <td>{{start}}</td>
+        <td>{{resort}}</td>
+        <td>${{price}}</td>
+        <td>
+          <!-- Edit link goes to /admin/trips/edit/:id -->
+          <a href="/admin/trips/edit/{{id}}">Edit</a>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</section>

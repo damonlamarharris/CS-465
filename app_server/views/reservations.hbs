@@ -1,0 +1,59 @@
+<section class="hero">
+  <img src="/images/banner.jpg" alt="" class="hero__image" />
+  <div class="hero__overlay">
+    <h1>Reservations</h1>
+    <p>Book your next trip here.</p>
+  </div>
+</section>
+
+<main class="container" style="max-width: 480px; margin-top: 2rem; margin-bottom: 4rem;">
+ 
+
+  {{!-- Show confirmation message after POST --}}
+  {{#if confirmation}}
+    <div class="alert alert-success" style="margin: 1rem 0; padding: .75rem 1rem; border-radius: 4px; background:#e6ffed;">
+      {{confirmation}}
+    </div>
+  {{/if}}
+
+  <form action="/reservations" method="post" class="card" style="padding: 1.5rem; border-radius: 8px; border: 1px solid #eee;">
+    <div class="form-group" style="margin-bottom: 1rem;">
+      <label for="destination">Destination</label><br />
+      <input
+        id="destination"
+        name="destination"
+        type="text"
+        style="width: 100%; padding:.5rem;"
+        value="{{formData.destination}}"
+      />
+    </div>
+
+    <div class="form-group" style="margin-bottom: 1rem;">
+      <label for="startDate">Start date</label><br />
+      <input
+        id="startDate"
+        name="startDate"
+        type="date"
+        style="width: 100%; padding:.5rem;"
+        value="{{formData.startDate}}"
+      />
+    </div>
+
+    <div class="form-group" style="margin-bottom: 1rem;">
+      <label for="nights">Nights</label><br />
+      <input
+        id="nights"
+        name="nights"
+        type="number"
+        min="1"
+        style="width: 100%; padding:.5rem;"
+        value="{{#if formData.nights}}{{formData.nights}}{{else}}3{{/if}}"
+      />
+    </div>
+
+    <button type="submit" class="btn btn-primary" style="padding:.5rem 1.5rem;">
+      Reserve
+    </button>
+  </form>
+</main>
+

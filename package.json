@@ -1,17 +1,26 @@
 {
   "name": "cs-465",
   "version": "1.0.0",
-  "description": "full stack development including front-end, back-end and database design and development",
+  "description": "Full stack development including front-end, back-end, and database design and development for Travlr Getaways.",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/damonlamarharris/CS-465.git"
+    "url": "https://github.com/damonlamarharris/CS-465.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "MEAN",
+    "Express",
+    "Handlebars",
+    "Node.js",
+    "Travlr",
+    "FullStack"
+  ],
+  "author": "Damon Lamar Harris",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
@@ -21,5 +30,8 @@
   "dependencies": {
     "express": "^5.1.0",
     "express-handlebars": "^8.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
   }
 }

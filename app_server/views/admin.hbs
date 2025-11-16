@@ -1,0 +1,34 @@
+<h1>Admin Dashboard</h1>
+
+<section class="chips">
+  <span>Total Trips ({{stats.tripsTotal}})</span>
+  <span>Users ({{stats.usersTotal}})</span>
+  <span>Pending Reservations ({{stats.pendingReservations}})</span>
+</section>
+
+<section class="toolbar" style="margin: 1rem 0;">
+  <button>New Trip</button>
+  <button>New User</button>
+</section>
+
+<section>
+  <h2>Users</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th><th>Name</th><th>Role</th><th>Email</th><th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each users}}
+      <tr>
+        <td>{{id}}</td>
+        <td>{{name}}</td>
+        <td>{{role}}</td>
+        <td>{{email}}</td>
+        <td><a href="#">Edit</a></td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</section>

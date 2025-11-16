@@ -1,8 +1,14 @@
 <header class="topnav">
-  <div class="logo">Corp Logo</div>
+  <div class="logo"><a href="/">Travler Getaways</a></div>
   <nav>
-    {{#each nav}}
-      <a href="{{this.href}}">{{this.label}}</a>
-    {{/each}}
+    <a href="/" class="{{#if (eq title 'Travler Getaways')}}active{{/if}}">Home</a>
+    <a href="/travel" class="{{#if (eq title 'Trips')}}active{{/if}}">Travel</a>
+    <a href="/reservations" class="{{#if (eq title 'Reservations')}}active{{/if}}">Reservations</a>
   </nav>
+  <div class="toolbar">
+    <a href="/login">Login</a>
+    <a href="/signup" class="primary">Signup</a>
+  </div>
 </header>
+
+

@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "Paris, France",
+    "length": 7,
+    "start": "2025-06-10",
+    "resort": "Hotel Le Meurice",
+    "price": 2499
+  },
+  {
+    "id": 2,
+    "name": "Tokyo, Japan",
+    "length": 8,
+    "start": "2025-07-01",
+    "resort": "Park Hyatt Tokyo",
+    "price": 3150
+  },
+  {
+    "id": 3,
+    "name": "Hawaii, USA",
+    "length": 6,
+    "start": "2025-08-15",
+    "resort": "Royal Hawaiian Resort",
+    "price": 2200
+  }
+]

@@ -1,38 +1,60 @@
-<h1>Travel</h1>
+<section style="margin-top:2rem; text-align:center;">
+  <h1 style="font-size:1.8rem; font-weight:700; margin-bottom:1rem;">
+    Explore Our Top Travel Destinations
+  </h1>
+  <p style="max-width:650px; margin:0 auto 2rem; font-size:1.05rem; line-height:1.5;">
+    Discover exciting locations around the world. Every trip includes premium resorts, unforgettable experiences, and exclusive rates for our members.
+  </p>
+</section>
 
-<div class="chips">
-  <span>Cruises ({{counts.Cruises}})</span>
-  <span>Mountains ({{counts.Mountains}})</span>
-  <span>Beaches ({{counts.Beaches}})</span>
-</div>
+<section style="max-width:960px; margin:0 auto;">
 
-<div class="toolbar">
-  <input type="search" placeholder="search travel">
-  <button>Add a Trip</button>
-</div>
+  <!-- Search and Add Toolbar -->
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+    <input type="search" placeholder="Search destinations..." 
+           style="padding:0.5rem 1rem; border:1px solid #ccc; border-radius:6px; width:60%;" />
+    <button style="background:#007bff; color:#fff; border:none; padding:0.6rem 1.2rem; border-radius:6px; cursor:pointer;">
+      Add a Trip
+    </button>
+  </div>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>ID</th><th>Name</th><th>Length</th><th>Start</th><th>Resort</th><th>Per Person</th><th></th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each trips}}
-      <tr>
-        <td>{{id}}</td>
-        <td>{{name}}</td>
-        <td>{{length}}</td>
-        <td>{{start}}</td>
-        <td>{{resort}}</td>
-        <td>${{price}}</td>
-        <td><a href="#">Edit</a></td>
-      </tr>
-    {{/each}}
-  </tbody>
-</table>
+  <!-- Dynamic Trips Table -->
+  {{#if trips.length}}
+    <table style="width:100%; border-collapse:collapse; background:#fff; box-shadow:0 2px 4px rgba(0,0,0,0.1);">
+      <thead style="background:#007bff; color:#fff;">
+        <tr>
+          <th style="padding:0.75rem;">ID</th>
+          <th style="padding:0.75rem;">Destination</th>
+          <th style="padding:0.75rem;">Length</th>
+          <th style="padding:0.75rem;">Start Date</th>
+          <th style="padding:0.75rem;">Resort</th>
+          <th style="padding:0.75rem;">Price (Per Person)</th>
+          <th style="padding:0.75rem;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each trips}}
+          <tr style="border-bottom:1px solid #eee;">
+            <td style="padding:0.75rem;">{{id}}</td>
+            <td style="padding:0.75rem;">{{name}}</td>
+            <td style="padding:0.75rem;">{{length}} days</td>
+            <td style="padding:0.75rem;">{{start}}</td>
+            <td style="padding:0.75rem;">{{resort}}</td>
+            <td style="padding:0.75rem;">{{money price}}</td>
+            <td style="padding:0.75rem;"><a href="#" style="color:#007bff; text-decoration:none;">Edit</a></td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  {{else}}
+    <p style="text-align:center; font-size:1.1rem; margin-top:2rem;">No trips found.</p>
+  {{/if}}
 
-<div class="pager">
-  <a href="#" aria-label="previous">previous &larr;</a>
-  <a href="#" aria-label="next">&rarr; next</a>
-</div>
+  <!-- Pager -->
+  <div style="text-align:center; margin-top:2rem;">
+    <a href="#" aria-label="previous" style="margin-right:1rem; text-decoration:none; color:#007bff;">← Previous</a>
+    <a href="#" aria-label="next" style="text-decoration:none; color:#007bff;">Next →</a>
+  </div>
+</section>
+
+

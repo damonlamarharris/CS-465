@@ -1,0 +1,60 @@
+<section class="container">
+  <h2>{{title}}</h2>
+
+  <form>
+    <div class="form-group">
+      <label for="name">Destination</label>
+      <input
+        id="name"
+        type="text"
+        class="form-control"
+        value="{{trip.name}}"
+        placeholder="e.g., Death Valley Night Sky Tour"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="length">Length (days)</label>
+      <input
+        id="length"
+        type="number"
+        class="form-control"
+        value="{{trip.length}}"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="start">Start Date</label>
+      <input
+        id="start"
+        type="date"
+        class="form-control"
+        value="{{trip.start}}"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="resort">Resort</label>
+      <input
+        id="resort"
+        type="text"
+        class="form-control"
+        value="{{trip.resort}}"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="price">Price (per person)</label>
+      <input
+        id="price"
+        type="number"
+        class="form-control"
+        value="{{trip.price}}"
+      />
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+      {{#if trip.id}}Update Trip{{else}}Create Trip{{/if}}
+    </button>
+  </form>
+</section>

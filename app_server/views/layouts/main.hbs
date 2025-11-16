@@ -1,39 +1,99 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>{{title}}</title>
+    <title>{{#if title}}{{title}} | Travler Getaways{{else}}Travler Getaways{{/if}}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="/styles.css" />
     <style>
-      nav a { margin-right: 12px; text-decoration: none; }
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background-color: #f9f9f9;
+        color: #333;
+      }
+
+      header {
+        background: #fff;
+        border-bottom: 1px solid #ddd;
+        padding: 1rem 2rem;
+      }
+
+      nav a {
+        margin-right: 1rem;
+        text-decoration: none;
+        color: #333;
+        font-weight: 500;
+      }
+
+      nav a:hover {
+        color: #007bff;
+      }
+
       .cta-signup {
-        padding: 6px 12px; border-radius: 6px; font-weight: 600;
-        background: #007bff; color: #fff;
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-weight: 600;
+        background: #007bff;
+        color: #fff;
+      }
+
+      .cta-signup:hover {
+        background: #0056b3;
+      }
+
+      h1.site-title {
+        font-weight: 800;
+        margin: 2rem 0 1rem 0;
+        text-align: center;
+      }
+
+      footer {
+        text-align: center;
+        padding: 1.5rem 0;
+        font-size: 0.9rem;
+        color: #666;
+        border-top: 1px solid #ddd;
+        background-color: #fff;
+        margin-top: 3rem;
+      }
+
+      main {
+        max-width: 960px;
+        margin: 2rem auto;
+        padding: 0 1rem;
       }
     </style>
   </head>
+
   <body>
-    <header style="padding: 14px 18px;">
-      <div style="display:flex; align-items:center; gap:24px;">
-        <div style="font-size:1.25rem; font-weight:700;">Corp Logo</div>
+    <!-- Header -->
+    <header>
+      <div style="display: flex; align-items: center; justify-content: space-between;">
+        <div style="font-size: 1.25rem; font-weight: 700;">Travler Getaways</div>
         <nav>
           <a href="/">Home</a>
           <a href="/travel">Travel</a>
-          <a href="/news">News</a>
           <a href="/reservations">Reservations</a>
-          <a href="/admin">Admin</a>
-          <a href="/checkout">Checkout</a>
           <a href="/login">Login</a>
           <a href="/signup" class="cta-signup">Signup</a>
         </nav>
       </div>
-      <hr />
     </header>
 
-    {{{body}}}
+    <!-- Main Body Content -->
+    <main>
+      {{{body}}}
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      &copy; {{year}} Travler Getaways. All rights reserved.
+    </footer>
   </body>
 </html>
+
+
 
 
 
