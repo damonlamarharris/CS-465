@@ -6,6 +6,9 @@ const exphbs = require("express-handlebars");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// --- MongoDB / Mongoose Setup ---
+require("./app_server/models/db"); // connects to MongoDB and loads models
+
 // --- View Engine Setup (Handlebars) ---
 app.engine(
   ".hbs",
@@ -21,17 +24,35 @@ app.set("view engine", ".hbs");
 app.set("views", path.join(__dirname, "app_server", "views"));
 
 // --- Middleware ---
+// Parse JSON and form data
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // for form posts
+
+// Basic CORS so Angular (or other clients) can call /api/*
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*"); // you can tighten this later
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
+  next();
+});
 
 // --- Static Files ---
 app.use(express.static(path.join(__dirname, "public")));
 
-// --- Routers (require AFTER engine is configured) ---
+// --- Routers (require AFTER engine & db are configured) ---
 const travelRouter = require("./app_server/routes/travel");
 const reservationsRouter = require("./app_server/routes/reservations");
 const authRouter = require("./app_server/routes/auth");
-const adminRouter = require("./app_server/routes/admin"); // NEW
+const adminRouter = require("./app_server/routes/admin");
+
+// API router for trips (JSON via Mongoose)
+const tripsApiRouter = require("./app_server/routes/api/trips");
 
 // --- Routes ---
 
@@ -61,8 +82,11 @@ app.post("/reservations", (req, res) => {
 // Use routers
 app.use("/travel", travelRouter);
 app.use("/reservations", reservationsRouter); // GET /reservations from router
-app.use("/admin", adminRouter);               // NEW: /admin, /admin/trips, etc.
+app.use("/admin", adminRouter);               // /admin, /admin/trips, etc.
 app.use("/", authRouter);                     // /login and /signup
+
+// API routes (e.g., GET /api/trips)
+app.use("/api", tripsApiRouter);
 
 // --- 404 Handler ---
 app.use((req, res) => {
@@ -75,12 +99,4 @@ app.listen(PORT, () => {
 });
 
 module.exports = app;
-
-
-
-
-
-
-
-
 

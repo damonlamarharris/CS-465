@@ -29,7 +29,8 @@
   "homepage": "https://github.com/damonlamarharris/CS-465#readme",
   "dependencies": {
     "express": "^5.1.0",
-    "express-handlebars": "^8.0.3"
+    "express-handlebars": "^8.0.3",
+    "mongoose": "^8.20.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.11"
