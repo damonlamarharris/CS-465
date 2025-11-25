@@ -6,8 +6,9 @@ const exphbs = require("express-handlebars");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// --- MongoDB / Mongoose Setup ---
-require("./app_server/models/db"); // connects to MongoDB and loads models
+// --- MongoDB / Mongoose Setup (API DB Layer) ---
+require("./app_api/models/db"); 
+// This now loads the correct API-side database models (Module 5 requirement)
 
 // --- View Engine Setup (Handlebars) ---
 app.engine(
@@ -24,13 +25,12 @@ app.set("view engine", ".hbs");
 app.set("views", path.join(__dirname, "app_server", "views"));
 
 // --- Middleware ---
-// Parse JSON and form data
 app.use(express.json());
-app.use(express.urlencoded({ extended: true })); // for form posts
+app.use(express.urlencoded({ extended: true }));
 
-// Basic CORS so Angular (or other clients) can call /api/*
+// CORS for allowing Angular or external clients to access /api endpoints
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*"); // you can tighten this later
+  res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
@@ -45,14 +45,14 @@ app.use((req, res, next) => {
 // --- Static Files ---
 app.use(express.static(path.join(__dirname, "public")));
 
-// --- Routers (require AFTER engine & db are configured) ---
+// --- MVC Routers (Server-Side Web App) ---
 const travelRouter = require("./app_server/routes/travel");
 const reservationsRouter = require("./app_server/routes/reservations");
 const authRouter = require("./app_server/routes/auth");
 const adminRouter = require("./app_server/routes/admin");
 
-// API router for trips (JSON via Mongoose)
-const tripsApiRouter = require("./app_server/routes/api/trips");
+// --- REST API Router (Module 5) ---
+const apiRouter = require("./app_api/routes/index");
 
 // --- Routes ---
 
@@ -61,7 +61,7 @@ app.get("/", (req, res) => {
   res.render("index", { title: "Travlr Getaways" });
 });
 
-// Handle reservations form POST directly
+// Reservations form POST (direct)
 app.post("/reservations", (req, res) => {
   const { destination, startDate, nights } = req.body;
 
@@ -71,7 +71,6 @@ app.post("/reservations", (req, res) => {
     nights || "0"
   } nights.`;
 
-  // re-render the same reservations view with a confirmation message
   res.render("reservations", {
     title: "Reservations",
     confirmation,
@@ -79,14 +78,15 @@ app.post("/reservations", (req, res) => {
   });
 });
 
-// Use routers
+// MVC Route Usage
 app.use("/travel", travelRouter);
-app.use("/reservations", reservationsRouter); // GET /reservations from router
-app.use("/admin", adminRouter);               // /admin, /admin/trips, etc.
-app.use("/", authRouter);                     // /login and /signup
+app.use("/reservations", reservationsRouter);
+app.use("/admin", adminRouter);
+app.use("/", authRouter); // login/signup
 
-// API routes (e.g., GET /api/trips)
-app.use("/api", tripsApiRouter);
+// --- API Routes (JSON only) ---
+app.use("/api", apiRouter);
+// Example: GET http://localhost:3000/api/trips
 
 // --- 404 Handler ---
 app.use((req, res) => {
@@ -94,9 +94,9 @@ app.use((req, res) => {
 });
 
 // --- Start Server ---
-app.listen(PORT, () => {
-  console.log(`Travlr Getaways running at http://localhost:${PORT}`);
-});
+app.listen(PORT, () =>
+  console.log(`Travlr Getaways running at http://localhost:${PORT}`)
+);
 
 module.exports = app;
 
