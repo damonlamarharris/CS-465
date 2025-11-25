@@ -1,302 +1,167 @@
-"# CS-465 Module 4 Project"
-
-
-
-CS-465 Module 4 – Travlr Getaways: API Integration \& Admin Functionality
-
-
-
+Travler Getaways – Module 5: RESTful API (CS-465)
 Overview
-
-
-
-Module 4 expands on the Travlr Getaways application by introducing server-side API development, connecting the Express backend to Angular, and implementing secure admin functionality. This module demonstrates how the MEAN stack works together, how data flows from MongoDB through an Express API to the Angular front end, and how an authenticated admin can manage content.
-
-
-
-What Was Implemented in Module 4
-
-\### 1. API Layer Development (Express + Mongoose)
-
-
-
-In this module, I created a full REST API that provides structured endpoints to access and modify trip data.
-
-Key API features include:
-
-
-
-GET /api/trips – return all trips
-
-
-
-GET /api/trips/:tripId – return a single trip
-
-
-
-POST /api/trips – allow admin users to add a trip
-
-
-
-PUT /api/trips/:tripId – allow admin updates
-
-
-
-DELETE /api/trips/:tripId – remove a trip
-
-
-
-This API now serves as the bridge between the database and the Angular front end.
-
-
-
-\### 2. Admin Authentication System
-
-
-
-To protect the admin UI, I implemented:
-
-
-
-A login page
-
-
-
-A signup workflow
-
-
-
-Password hashing (bcrypt)
-
-
-
-Session / token-based authentication
-
-
-
-Restricted admin routes
-
-
-
-Redirects for unauthorized users
-
-
-
-Only authenticated users can access:
-
-
-
-/admin
-
-
-
-/admin/trips
-
-
-
-/admin/trip/edit/:id
-
-
-
-This ensures the system maintains security and prevents unauthorized changes.
-
-
-
-\### 3. Admin Page
-
-
-
-A dedicated admin interface was built, allowing the admin to:
-
-
-
-View all trips
-
-
-
-Add a new trip
-
-
-
-Edit existing trips
-
-
-
-Remove trips
-
-
-
-Manage account login/logout
-
-
-
-This satisfies the requirement for a persistent, secure content-management screen.
-
-
-
-\### 4. Angular Front-End Integration
-
-
-
-In Module 4, the Angular SPA pulls data from the API using:
-
-
-
-Angular services
-
-
-
-HttpClient module
-
-
-
-Observable streams
-
-
-
-Two-way binding for forms
-
-
-
-This introduced “rich functionality,” including:
-
-
-
-Dynamic rendering of data
-
-
-
-Client-side routing
-
-
-
-Editable forms connected to the backend
-
-
-
-Real-time updates when admin changes content
-
-
-
-The Angular SPA now communicates fully with the Express API.
-
-
-
-\### 5. Testing the Integration
-
-
-
-To verify the system works end-to-end:
-
-
-
-API Testing
-
-
-
-Used Postman to test all REST endpoints
-
-
-
-Verified successful GET/POST/PUT/DELETE responses
-
-
-
-Checked error handling for invalid IDs
-
-
-
-Angular ↔ API Testing
-
-
-
-Launched Angular with ng serve
-
-
-
-Launched Express with npm start
-
-
-
-Validated that changes in the Admin Dashboard update the database
-
-
-
-Confirmed the UI data refreshes automatically
-
-
-
-Technologies Used
-
-
-
-Node.js / Express
-
-
-
-Angular SPA
-
-
-
-MongoDB / Mongoose
-
-
-
-Handlebars.js (server views)
-
-
-
-REST API architecture
-
-
-
-JSON Web Tokens / bcrypt
-
-
-
-HTML, CSS, JavaScript
-
-
-
-Project Structure (Module 4 Relevant Files)
+Module 5 introduces Separation of Concerns by moving all database access logic out of the MVC web application (app_server) and into a new RESTful API application (app_api). This API exposes structured JSON data for trips, enabling multiple clients, including Angular, Express, and external callers, to retrieve trip information programmatically.
+This module completes the connection between:
+	• MongoDB database
+	• Express-based REST API
+	• Frontend MVC application
+By the end of this module, Travlr Getaways includes a fully functioning API accessible at /api, returning structured trip data using Mongoose and Express.js.
+
+Project Structure (Module 5)
 
 CS-465/
-
 │
-
-├── app.js
-
-├── app\_server/
-
+├── app.js                    # Main application file
+│
+├── app_server/               # MVC app (views, controllers, routes)
 │   ├── controllers/
-
-│   ├── routes/
-
 │   ├── models/
-
-│   ├── views/
-
+│   ├── routes/
+│   └── views/
 │
-
-├── public/
-
-│   ├── styles.css
-
-│   ├── images/
-
+├── app_api/                  # NEW REST API for Module 5
+│   ├── app.js (optional)
+│   ├── models/
+│   │   ├── db.js             # MongoDB connection & Mongoose initialization
+│   │   └── trips.js          # Trip schema/model
+│   ├── controllers/
+│   │   └── trips.js          # API logic (Mongoose FIND / FIND ONE)
+│   └── routes/
+│       └── index.js          # API routes (/api/trips, /api/trips/:tripCode)
 │
-
-├── travlr-express/        (Express backend)
-
+├── data/
+│   └── trips.json            # Seed trip data
 │
-
-└── travlr-client/         (Angular SPA)
-
-
-
-Reflection
+├── public/                   # Static assets
+├── node_modules/
+└── package.json
 
 
+Database Integration
+The API uses MongoDB + Mongoose to store and retrieve trip data.
+Key connection file:
+/app_api/models/db.js
+	• Establishes the MongoDB connection
+	• Loads the trip model
+	• Logs connection events (connected, error, disconnected)
+This separation ensures the MVC frontend no longer contains database queries, following proper architectural layering.
 
-Module 4 strengthened my understanding of full-stack development by showing how the server API and Angular front-end communicate. I learned how authentication restricts access and how CRUD operations are performed securely. This module moved the project from simple static pages to a fully dynamic, data-driven web application with admin controls.
+REST API Endpoints
+All API endpoints begin with:
+
+/api
+GET /api/trips
+Returns a complete list of trips from MongoDB.
+Example response:
+
+[
+  {
+    "_id": "691b976cf6fb866b8dd076d1",
+    "code": "PARIS2025",
+    "name": "Paris, France",
+    "length": 7,
+    "start": "2025-06-10T00:00:00.000Z",
+    "resort": "Hotel Le Meurice",
+    "price": 2499,
+    "__v": 0
+  }
+]
+
+GET /api/trips/:tripCode
+Returns a single trip matching the provided trip code.
+Example:
+
+GET /api/trips/ROME2025
+Example response:
+
+{
+  "_id": "691b976cf6fb866b8dd076d4",
+  "code": "ROME2025",
+  "name": "Rome, Italy",
+  "length": 10,
+  "start": "2025-09-05T00:00:00.000Z",
+  "resort": "Hotel Eden",
+  "price": 2899,
+  "__v": 0
+}
+
+Mongoose Logic (Controller Summary)
+All API logic lives in:
+/app_api/controllers/trips.js
+Retrieve All Trips
+Uses:
+
+Trip.find().exec()
+Retrieve One Trip by Code
+Uses:
+
+Trip.findOne({ code: tripCode }).exec()
+Error Handling
+The controller returns:
+	• 200 – Success
+	• 404 – Trip not found
+	• 400 – Missing parameter
+	• 500 – Server/database error
+This ensures the API is robust and responds with proper HTTP status codes.
+
+Testing With Postman
+Module 5 requires testing API behavior using Postman or a web browser.
+Steps
+	1. Start the server:
+
+node app.js
+	2. Test endpoints:
+		○ GET http://localhost:3000/api/trips
+		○ GET http://localhost:3000/api/trips/PARIS2025
+Expected outcomes:
+	• JSON response
+	• Proper error messages
+	• Correct use of Mongoose’s FIND method
+	• HTTP status codes appear in Postman
+
+Separation of Concerns (SOC)
+Module 5 emphasizes SOC by splitting the application into two major components:
+1. MVC Web App (app_server)
+	• Renders views (.hbs)
+	• Handles reservations, login, admin, etc.
+	• Does not connect directly to MongoDB
+2. REST API (app_api)
+	• Communicates with MongoDB through Mongoose
+	• Returns JSON only
+	• Provides data to:
+		○ Angular SPA
+		○ Express MVC app
+		○ External clients (Postman, etc.)
+By dividing the project this way, each part becomes easier to maintain, extend, and debug.
+
+How to Run the Application
+	1. Install dependencies:
+
+npm install
+	2. Seed trips database if needed:
+
+node seedTrips.js
+	3. Start the server:
+
+node app.js
+	4. Visit web app:
+
+http://localhost:3000/
+	5. Test API:
+
+http://localhost:3000/api/trips
+http://localhost:3000/api/trips/PARIS2025
+
+Conclusion
+With Module 5 completed, the Travler Getaways project now includes:
+	• A separated, fully functioning REST API
+	• Mongoose-powered data retrieval
+	• Standardized routing for trip data
+	• Proper error handling
+	• SOC-compliant architecture
+	• Verified API functionality via Postman
+This forms the backbone for future Angular integration in Module 6.
+
+
+
 
