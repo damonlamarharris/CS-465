@@ -1,0 +1,54 @@
+<div class="card mb-3">
+  <div class="card-body">
+    <!-- Trip name & code -->
+    <h5 class="card-title mb-1">
+      {{ trip.name }}
+    </h5>
+    <h6 class="card-subtitle text-muted mb-2">
+      {{ trip.code }}
+    </h6>
+
+    <!-- Details -->
+    <p class="card-text mb-1">
+      <strong>Resort:</strong>
+      {{ trip.resort || 'Not specified' }}
+    </p>
+
+    <p class="card-text mb-1">
+      <strong>Length:</strong>
+      {{ trip.length }} days
+    </p>
+
+    <p class="card-text mb-1">
+      <strong>Starts:</strong>
+      {{ trip.start | date: 'MMM d, y' }}
+    </p>
+
+    <p class="card-text mb-2">
+      <strong>Price per person:</strong>
+      {{ trip.perPerson | currency:'USD':'symbol':'1.0-0' }}
+    </p>
+
+    <!-- Error -->
+    <div *ngIf="errorMessage" class="alert alert-danger py-1 my-2">
+      {{ errorMessage }}
+    </div>
+
+    <!-- Actions -->
+    <button
+      type="button"
+      class="btn btn-primary btn-sm me-2"
+      (click)="onEditClick()">
+      Edit
+    </button>
+
+    <button
+      type="button"
+      class="btn btn-outline-danger btn-sm"
+      [disabled]="deleting"
+      (click)="onDeleteClick()">
+      {{ deleting ? 'Deleting...' : 'Delete' }}
+    </button>
+  </div>
+</div>
+

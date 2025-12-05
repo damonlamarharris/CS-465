@@ -1,0 +1,45 @@
+/* Card styling */
+.card {
+  border: 1px solid #e2e8f0;       /* light gray border */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
+}
+
+/* Hover effect */
+.card:hover {
+  box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+  transform: translateY(-2px);
+}
+
+/* Title spacing */
+.card-title {
+  font-weight: 600;
+}
+
+/* Labels */
+.card-text strong {
+  color: #334155; /* slate-700 */
+}
+
+/* Error message inside card */
+.alert-danger {
+  font-size: 0.85rem;
+  padding: 4px 8px;
+}
+
+/* Buttons row */
+button.btn {
+  min-width: 80px;
+}
+
+/* Delete button small improvements */
+button.btn-outline-danger:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Nice spacing between card elements */
+.card-body p {
+  margin-bottom: 6px;
+}

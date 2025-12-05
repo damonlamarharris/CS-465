@@ -1,0 +1,87 @@
+<form (ngSubmit)="onSubmit()" #tripForm="ngForm" class="mt-3">
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Code -->
+  <div class="mb-3">
+    <label class="form-label">Code</label>
+    <input
+      type="text"
+      class="form-control"
+      name="code"
+      [(ngModel)]="model.code"
+      required
+    />
+  </div>
+
+  <!-- Name -->
+  <div class="mb-3">
+    <label class="form-label">Name</label>
+    <input
+      type="text"
+      class="form-control"
+      name="name"
+      [(ngModel)]="model.name"
+      required
+    />
+  </div>
+
+  <!-- Resort -->
+  <div class="mb-3">
+    <label class="form-label">Resort</label>
+    <input
+      type="text"
+      class="form-control"
+      name="resort"
+      [(ngModel)]="model.resort"
+    />
+  </div>
+
+  <!-- Length -->
+  <div class="mb-3">
+    <label class="form-label">Length (days)</label>
+    <input
+      type="number"
+      min="1"
+      class="form-control"
+      name="length"
+      [(ngModel)]="model.length"
+      required
+    />
+  </div>
+
+  <!-- Start Date -->
+  <div class="mb-3">
+    <label class="form-label">Start Date</label>
+    <input
+      type="date"
+      class="form-control"
+      name="start"
+      [(ngModel)]="model.start"
+      required
+    />
+  </div>
+
+  <!-- Price per Person -->
+  <div class="mb-3">
+    <label class="form-label">Price per person</label>
+    <input
+      type="number"
+      min="0"
+      class="form-control"
+      name="perPerson"
+      [(ngModel)]="model.perPerson"
+      required
+    />
+  </div>
+
+  <!-- Submit -->
+  <button type="submit" class="btn btn-success w-100">
+    Save Trip
+  </button>
+
+</form>
+

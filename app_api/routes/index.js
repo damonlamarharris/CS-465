@@ -3,10 +3,22 @@ const express = require("express");
 const router = express.Router();
 const tripsCtrl = require("../controllers/trips");
 
-// GET /api/trips        -> all trips
+// === TRIP ROUTES ===
+
+// GET /api/trips  -> list all trips
 router.get("/trips", tripsCtrl.tripsList);
 
-// GET /api/trips/:tripCode   -> one trip by code
+// POST /api/trips -> create a new trip
+router.post("/trips", tripsCtrl.tripsCreate);
+
+// GET /api/trips/:tripCode -> read one trip
 router.get("/trips/:tripCode", tripsCtrl.tripsReadOne);
 
+// PUT /api/trips/:tripCode -> update a trip
+router.put("/trips/:tripCode", tripsCtrl.tripsUpdate);
+
+// DELETE /api/trips/:tripCode -> delete a trip
+router.delete("/trips/:tripCode", tripsCtrl.tripsDelete);
+
 module.exports = router;
+

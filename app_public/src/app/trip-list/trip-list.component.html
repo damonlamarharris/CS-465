@@ -1,0 +1,42 @@
+<div class="container mt-4">
+  <h2>Trips</h2>
+
+  <div class="row">
+    <div class="col-md-6">
+      <!-- Global error message -->
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+
+      <!-- Trip cards -->
+      <ng-container *ngIf="trips && trips.length; else noTrips">
+        <div
+          *ngFor="let trip of trips; trackBy: trackByCode"
+          class="mb-3"
+        >
+          <app-trip-card
+            [trip]="trip"
+            (edit)="onEditTrip(trip)"
+            (deleted)="onTripDeleted()">
+          </app-trip-card>
+        </div>
+      </ng-container>
+
+      <ng-template #noTrips>
+        <p class="text-muted">No trips available.</p>
+      </ng-template>
+    </div>
+
+    <div class="col-md-6">
+      <h3>{{ selectedTrip ? 'Edit Trip' : 'Add Trip' }}</h3>
+
+      <!-- 🔹 Hook form save to onSaveTrip so we can handle 409 errors -->
+      <app-trip-form
+        [trip]="selectedTrip"
+        (save)="onSaveTrip($event)">
+      </app-trip-form>
+    </div>
+  </div>
+</div>
+
+
