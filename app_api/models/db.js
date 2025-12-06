@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 
 let dbURI = "mongodb://localhost/travlr";
 
-// If you later move to Atlas or another URI, you can override with env var
 if (process.env.MONGODB_URI) {
   dbURI = process.env.MONGODB_URI;
 }
@@ -13,7 +12,6 @@ mongoose.connect(dbURI, {
   useUnifiedTopology: true,
 });
 
-// Helpful connection logs
 mongoose.connection.on("connected", () => {
   console.log(`Mongoose connected to ${dbURI}`);
 });
@@ -26,6 +24,34 @@ mongoose.connection.on("disconnected", () => {
   console.log("Mongoose disconnected");
 });
 
-// Load API models
+const gracefulShutdown = (msg, cb) => {
+  mongoose.connection.close(() => {
+    console.log(`Mongoose disconnected through ${msg}`);
+    cb();
+  });
+};
+
+process.once("SIGUSR2", () => {
+  gracefulShutdown("nodemon restart", () => {
+    process.kill(process.pid, "SIGUSR2");
+  });
+});
+
+process.on("SIGINT", () => {
+  gracefulShutdown("app termination", () => {
+    process.exit(0);
+  });
+});
+
+process.on("SIGTERM", () => {
+  gracefulShutdown("Heroku app shutdown", () => {
+    process.exit(0);
+  });
+});
+
+// Models
 require("./trips");
+require("./users");
+
+
 

@@ -1,24 +1,55 @@
 // app_api/routes/index.js
 const express = require("express");
 const router = express.Router();
+
+// express-jwt function
+const { expressjwt: jwt } = require("express-jwt");
+
 const tripsCtrl = require("../controllers/trips");
+const ctrlAuth = require("../controllers/authentication");
+
+// --- Simple logger for all /api requests ---
+router.use((req, res, next) => {
+  console.log(`API request: ${req.method} ${req.originalUrl}`);
+  next();
+});
+
+// --- Quick health check for /api root ---
+router.get("/", (req, res) => {
+  return res.json({ message: "API root OK" });
+});
+
+// === JWT Auth Middleware ===
+const auth = jwt({
+  secret: process.env.JWT_SECRET,
+  algorithms: ["HS256"],
+  requestProperty: "payload"
+});
+
+// === AUTH ROUTES ===
+router.post("/register", ctrlAuth.register);
+router.post("/login", ctrlAuth.login);
 
 // === TRIP ROUTES ===
-
-// GET /api/trips  -> list all trips
 router.get("/trips", tripsCtrl.tripsList);
-
-// POST /api/trips -> create a new trip
-router.post("/trips", tripsCtrl.tripsCreate);
-
-// GET /api/trips/:tripCode -> read one trip
 router.get("/trips/:tripCode", tripsCtrl.tripsReadOne);
 
-// PUT /api/trips/:tripCode -> update a trip
-router.put("/trips/:tripCode", tripsCtrl.tripsUpdate);
+// PROTECTED (JWT)
+router.post("/trips", auth, tripsCtrl.tripsCreate);
+router.put("/trips/:tripCode", auth, tripsCtrl.tripsUpdate);
+router.delete("/trips/:tripCode", auth, tripsCtrl.tripsDelete);
 
-// DELETE /api/trips/:tripCode -> delete a trip
-router.delete("/trips/:tripCode", tripsCtrl.tripsDelete);
+// If nothing matched in /api, send JSON 404 (so we can see it)
+router.use((req, res) => {
+  return res.status(404).json({
+    message: "API route not found",
+    path: req.originalUrl
+  });
+});
 
 module.exports = router;
+
+
+
+
 
